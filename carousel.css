@@ -48,18 +48,21 @@ h2 {
     right: 20px;
 }
 
-.main_button {
-     background: #f29872;
-     cursor: pointer;
+.btn {
+     background: transparent;
+     
+     display: none;
+     width: 10%;
  }
 
-.main_button:hover {
+.btn:hover {
     background-color: #f26545;
 }
 
 
-.main_button img{ 
-    width: 40px;
+.btn .fa{ 
+    color: #000000;
+    cursor: pointer;
 }
 
 .img_slide {
@@ -78,7 +81,8 @@ h2 {
 
 
 .my-nav {
-    display: flex;
+
+    display: none;
     justify-content: center;
 }
 

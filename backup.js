@@ -4,7 +4,6 @@ const track = document.querySelector('.img_holder');
 const slides = Array.from(track.children);
 
 // defining the next and previous buttons
-const btns = document.querySelectorAll('.btn');
 const nextButton = document.querySelector('.button-right');
 const prevButton = document.querySelector('.button-left');
 
@@ -25,19 +24,7 @@ const setSlidePosition = (slide, index) => {
 
 slides.forEach(setSlidePosition);
 
-// hiding the buttons
 
-track.addEventListener('mouseover', () => {
-    btns.forEach((btn) => {
-        btn.style.display = "block";
-    });
-});
-
-track.addEventListener('mouseout', () => {
-    btns.forEach((btn) => {
-        btn.style.display = "none";
-    });
-});
 // important function
 
 const moveToSlide = (track, currentSlide, targetSlide) => {
@@ -48,7 +35,6 @@ const moveToSlide = (track, currentSlide, targetSlide) => {
 
 // moving backwards
 
-
 prevButton.addEventListener('click', e => {
     const currentSlide = track.querySelector('.current-slide');
     const prevSlide = currentSlide.previousElementSibling;
@@ -58,14 +44,13 @@ prevButton.addEventListener('click', e => {
 // CLICK RIGHT TO MOVE RIGHT
 
 nextButton.addEventListener('click', e => {
-   
     const currentSlide = track.querySelector('.current-slide');
     const nextSlide = currentSlide.nextElementSibling;
     
+
     // move to next style
    moveToSlide(track, currentSlide, nextSlide);
-});
-
+})
 
 dotNav.addEventListener('click', e => {
     const clickedDot = e.target.closest('button');
@@ -76,6 +61,8 @@ dotNav.addEventListener('click', e => {
     const clickedIndex = dots.findIndex(dot => dot === clickedDot);
     const targetSlide = slides[clickedIndex];
 
-
-   
+    moveToSlide(track, currentSlide, targetSlide);
+    // to  make the darker dots move on the current slide indeed.
+    currentDot.classList.remove('current-slide');
+    clickedDot.classList.add('current-slide');
 })
