@@ -1,95 +1,55 @@
-const track = document.querySelector('.img_holder');
-// storing the li
+const carousel = document.querySelector(".carousel-container");
+const btns = document.querySelectorAll(".btn");
+const slides = document.querySelectorAll(".slides");
+const backButton = document.querySelector(".button-left");
+const nextButton = document.querySelector(".button-right");
 
-const slides = Array.from(track.children);
-
-// defining the next and previous buttons
-const btns = document.querySelectorAll('.btn');
-const nextButton = document.querySelector('.button-right');
-const prevButton = document.querySelector('.button-left');
-
-// define the dots
-const dotNav = document.querySelector('.my-nav');
-const dots = Array.from(dotNav.children);
-
-// got the width here
-const slideSize = slides[0].getBoundingClientRect();
-
-const slideWidth = slideSize.width;
-
-
+// the buttons.
 let counter = 0;
-// bearings
-
-const setSlidePosition = (slide, index) => {
-    slide.style.left = slideWidth * index + 'px';
-};
-
-slides.forEach(setSlidePosition);
-
-// important function
-
-const moveToSlide = (track, currentSlide, targetSlide) => {
-    if (counter === slides.length) {
-        counter = 0;
-    }
-
-    
-    if (counter < 0) {
-        counter = slides.length - 1;
-    }
 
 
-    track.style.transform = 'translateX(-' + targetSlide.style.left + ')';
-    currentSlide.classList.remove('current-slide');
-    targetSlide.classList.add('current-slide');
+// defining the backButton
 
-}
-
-prevButton.addEventListener('click', e => {
+backButton.addEventListener("click", () => {
     counter--;
-    const currentSlide = track.querySelector('.current-slide');
-    const prevSlide = currentSlide.previousElementSibling;
-    moveToSlide(track, currentSlide, prevSlide);
+    carouselSlide();
 });
-// CLICK RIGHT TO MOVE RIGHT
 
-nextButton.addEventListener('click', e => {
+// defining the nextButton
+nextButton.addEventListener("click", () => {
     counter++;
-    const currentSlide = track.querySelector('.current-slide');
-    const nextSlide = currentSlide.nextElementSibling;
-    // move to next style
-   moveToSlide(track, currentSlide, nextSlide);
+    carouselSlide();
 });
 
-// hiding the buttons
+// the sliding process
+slides.forEach((slide, index) => {
+    slide.style.left = `${index * 100}%`;
+  });
 
-track.addEventListener('mouseover', () => {
+  
+
+carousel.addEventListener('mouseover', () => {
     btns.forEach((btn) => {
         btn.style.display = "block";
     });
 });
 
-track.addEventListener('mouseout', () => {
+carousel.addEventListener('mouseout', () => {
     btns.forEach((btn) => {
         btn.style.display = "none";
     });
 });
 
+const carouselSlide = () => {
+    if (counter === slides.length) {
+        counter = 0;
+    }
 
-// moving backwards
+    if (counter < 0) {
+        counter = slides.length - 1; 
+    }
 
-
-
-
-
-
-dotNav.addEventListener('click', e => {
-    const clickedDot = e.target.closest('button');
-
-    if (!clickedDot) return;
-    const currentSlide = track.querySelector('.current-slide');
-    const currentDot = dotNav.querySelector('.current-slide');
-    const clickedIndex = dots.findIndex(dot => dot === clickedDot);
-    const targetSlide = slides[clickedIndex];   
-})
+    slides.forEach(function (slide) {
+        slide.style.transform = `translateX(-${counter * 100}%)`;
+    });
+};
